@@ -8,10 +8,13 @@
 
 namespace App\Controllers;
 
-class HomeController
+
+use App\Controller;
+
+class HomeController extends Controller
 {
 
-    public function index() {
-        return 'haha';
+    public function actionIndex() {
+        return $this->view('home', ['title' => 'Search in Google']);
     }
 }

@@ -6,8 +6,11 @@
  * Time: 10:17
  */
 
-require __DIR__ . '/../vendor/autoload.php';
+//set_error_handler(function ($err_severity, $err_msg, $err_file, $err_line) {
+//    throw new ErrorException ($err_msg, 0, $err_severity, $err_file, $err_line);
+//});
 
+require __DIR__ . '/../vendor/autoload.php';
 
 $router = new App\Router();
 
@@ -16,8 +19,8 @@ $router->add('/', [
     'index'
 ]);
 
-$router->add('/api/search/{request}', [
-    App\Controllers\HomeController::class,
+$router->add('/api/search/{query}', [
+    App\Controllers\SearchController::class,
     'search'
 ]);
 

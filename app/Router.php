@@ -28,7 +28,7 @@ class Router
 
     /**
      * Array of request params
-     * @var string
+     * @var array
      */
     protected $request = [];
 
@@ -76,17 +76,34 @@ class Router
     }
 
 
+    /**
+     *
+     */
     public function run()
     {
         $query = $_SERVER['REQUEST_URI'];
 
-        if ($this->check($query)) {
-            if (class_exists($this->params[0])) {
-                if (method_exists($this->params[0], $this->params[1])) {
-                    $response = call_user_func_array($this->params, $this->request);
+        try {
+            $this->check($query);
+
+            list($controller, $method) = $this->params;
+
+            if (class_exists($controller)) {
+
+                $obj = new $controller($this->request);
+                $response = $obj->$method();
+
+                if ($response instanceof View) {
+                    $response->output();
+                } else {
                     echo $response;
                 }
+
+            } else {
+                throw new \Exception(sprintf("Class %s not found.", $controller));
             }
+        } catch (\Exception $e) {
+            echo $e->getMessage();
         }
     }
 }

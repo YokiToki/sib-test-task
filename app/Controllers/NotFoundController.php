@@ -9,7 +9,14 @@
 namespace App\Controllers;
 
 
-class NotFoundController
+use App\Controller;
+
+class NotFoundController extends Controller
 {
+
+    public function actionIndex()
+    {
+        return $this->view('404', ['title' => 'Not found']);
+    }
 
 }

@@ -9,7 +9,12 @@
 namespace App\Controllers;
 
 
-class SearchController
+use App\Controller;
+
+class SearchController extends Controller
 {
 
+    public function actionSearch() {
+
+    }
 }
