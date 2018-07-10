@@ -46,7 +46,7 @@ class Router
         // Request variables
         $route = preg_replace('/\{([a-z]+)\}/', '(?P<\1>[\w\d\+-]+)', $route);
         // Create uri pattern
-        $route = sprintf('/^%s$/i', $route);
+        $route = sprintf('/^%s$/ui', $route);
 
         $this->routes[$route] = $params;
     }
@@ -59,6 +59,9 @@ class Router
      */
     public function check(string $query)
     {
+        $query = urldecode($query);
+        $query = str_replace(' ', '+', $query);
+
         foreach ($this->routes as $route => $params) {
             if (preg_match($route, $query, $request)) {
                 $request = array_filter($request, function ($key) {
